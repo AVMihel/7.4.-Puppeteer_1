@@ -1,0 +1,17 @@
+{  
+  "name": "puppeteer1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gh.test.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest --runInBand",
+    "test1": "jest"
+  },
+  "author": "Andrey Mikhel",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^30.0.5",
+    "jest-puppeteer": "^11.0.0"
+  }
+}
