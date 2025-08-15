@@ -1,15 +1,16 @@
 let page;
 
-beforeEach(async () => {
-  page = await browser.newPage();
-  await page.goto("https://github.com/team");
-});
+// Задача 1
+describe("Github team page tests", () => {
+  beforeEach(async () => {
+    page = await browser.newPage();
+    await page.goto("https://github.com/team");
+  });
 
-afterEach(() => {
-  page.close();
-});
+  afterEach(() => {
+    page.close();
+  });
 
-describe("Github page tests", () => {
   test("The h1 header content", async () => {
     const firstLink = await page.$("header div div a");
     await firstLink.click();
@@ -25,15 +26,51 @@ describe("Github page tests", () => {
     expect(actual).toEqual("#start-of-content");
   }, 8000);
 
-  test("The page contains 'Get started with Team' button", async () => {    
-    const btnSelector = "div.col-md-8 a.btn-mktg.btn-large-mktg";    
+  test("The page contains 'Get started with Team' button", async () => {
+    const btnSelector = "div.col-md-8 a.btn-mktg.btn-large-mktg";
     await page.waitForSelector(btnSelector, {
       visible: true,
       timeout: 10000,
-    });    
+    });
     const buttonText = await page.$eval(btnSelector, (el) =>
       el.textContent.trim()
     );
     expect(buttonText).toContain("Get started with Team");
-  }, 20000); 
+  }, 20000);
+});
+
+// Задача 2
+describe("Github other pages tests", () => {
+  beforeEach(async () => {
+    page = await browser.newPage();
+  });
+
+  afterEach(() => {
+    page.close();
+  });
+
+  test("GitHub Issues page title", async () => {
+    await page.goto("https://github.com/features/issues");
+    await page.waitForSelector("title", { timeout: 5000 });
+    const title = await page.title();
+    expect(title).toEqual(
+      "GitHub Issues · Project planning for developers · GitHub"
+    );
+  }, 10000);
+
+  test("GitHub for Startups page title", async () => {
+    await page.goto("https://github.com/enterprise/startups");
+    await page.waitForSelector("title", { timeout: 5000 });
+    const title = await page.title();
+    expect(title).toEqual(
+      "GitHub for Startups: Build your startup on GitHub · GitHub"
+    );
+  }, 10000);
+
+  test("GitHub Sponsors page title", async () => {
+    await page.goto("https://github.com/sponsors");
+    await page.waitForSelector("title", { timeout: 5000 });
+    const title = await page.title();
+    expect(title).toEqual("GitHub Sponsors · GitHub");
+  }, 10000);
 });
