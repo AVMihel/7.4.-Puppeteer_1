@@ -1,14 +1,17 @@
 let page;
 
+beforeEach(async () => {
+  page = await browser.newPage();
+});
+
+afterEach(async () => {
+  await page.close();
+});
+
 // Задача 1
 describe("Github team page tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://github.com/team");
-  });
-
-  afterEach(() => {
-    page.close();
   });
 
   test("The h1 header content", async () => {
@@ -41,14 +44,6 @@ describe("Github team page tests", () => {
 
 // Задача 2
 describe("Github other pages tests", () => {
-  beforeEach(async () => {
-    page = await browser.newPage();
-  });
-
-  afterEach(() => {
-    page.close();
-  });
-
   test("GitHub Issues page title", async () => {
     await page.goto("https://github.com/features/issues");
     await page.waitForSelector("title", { timeout: 5000 });
